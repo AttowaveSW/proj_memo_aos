@@ -36,10 +36,17 @@ android {
     }
     buildFeatures {
         compose = true
+        dataBinding = true
     }
 }
 
 dependencies {
+    implementation("com.airbnb.android:lottie:6.6.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.7")
+    implementation("androidx.navigation:navigation-ui:2.8.7")
+    implementation("androidx.fragment:fragment-ktx:1.8.6")
+    implementation("androidx.appcompat:appcompat:1.7.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
