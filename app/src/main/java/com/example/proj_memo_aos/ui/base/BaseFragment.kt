@@ -24,11 +24,14 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val layoutResId: Int, 
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         binding.lifecycleOwner = this
 
-        // BaseFragment를 상속받아 사용하는 Activity에 정의된 setInitialize, setListeners 함수 실행
-        setListeners()
-        setInitialize()
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // BaseFragment를 상속받아 사용하는 Activity에 정의된 setInitialize, setListeners 함수 실행
+        setInitialize()
     }
 
     override fun onResume() {
@@ -39,9 +42,10 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val layoutResId: Int, 
         (activity as? MainActivity)?.onFragmentChanged(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     // setInitialize 함수를 강제하고 OnCreate 단계에서 실행시켜줌
     abstract fun setInitialize()
-
-    // setListeners 함수를 강제하고 OnCreate 단계에서 실행시켜줌
-    abstract fun setListeners()
 }

@@ -2,9 +2,10 @@ package com.example.proj_memo_aos.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.proj_memo_aos.data.model.MainScreenDataModel
 
-class MainActivityViewModel{
+class MainActivityViewModel: ViewModel() {
 
     // MainActivity에 관련된 Model을 LiveData로 선언
     private val _mainScreenDataModel = MutableLiveData<MainScreenDataModel>()

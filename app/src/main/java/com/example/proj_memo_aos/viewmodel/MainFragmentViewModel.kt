@@ -2,9 +2,10 @@ package com.example.proj_memo_aos.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.proj_memo_aos.data.model.AnimationCountDataModel
 
-class MainFragmentViewModel {
+class MainFragmentViewModel: ViewModel() {
 
     // MainFragment에 관련된 Model을 LiveData로 선언
     private val _animationCountDataModel = MutableLiveData<AnimationCountDataModel>()
