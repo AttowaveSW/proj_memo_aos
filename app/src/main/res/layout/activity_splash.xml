@@ -3,33 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <data>
         <variable
             name="viewModel"
-            type="com.example.proj_memo_aos.viewmodel.MainFragmentViewModel" />
+            type="com.example.proj_memo_aos.viewmodel.SplashViewModel" />
 
         <import type="android.view.View" />
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFF2D5">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/clap"
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.4"
+            android:src="@drawable/splashimg"
             app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintHeight_percent="0.4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="false"
-            app:lottie_loop="false"
-            app:lottie_rawRes="@raw/clap"
-            app:lottie_repeatCount="5" />
+            app:layout_constraintVertical_bias="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

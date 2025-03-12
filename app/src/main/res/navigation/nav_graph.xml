@@ -3,23 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/splash">
+    app:startDestination="@id/memoMain">
 
     <fragment
-        android:id="@+id/splash"
-        android:name="com.example.proj_memo_aos.ui.fragment.SplashFragment"
-        android:label="Splash"
-        tools:layout="@layout/fragment_splash">
+        android:id="@+id/memoMain"
+        android:name="com.example.proj_memo_aos.ui.fragment.MemoMainFragment"
+        tools:layout="@layout/fragment_memo_main"
+        android:label="MainMemo">
         <action
-            android:id="@+id/actionSplashToMain"
-            app:destination="@+id/main"/>
+            android:id="@+id/actionMemoMainToMemoEditor"
+            app:destination="@+id/memoEditor"
+            app:enterAnim="@anim/enter"
+            app:popExitAnim="@anim/pop_exit"/>
     </fragment>
 
     <fragment
-        android:id="@+id/main"
-        android:name="com.example.proj_memo_aos.ui.fragment.MainFragment"
-        android:label="Main"
-        tools:layout="@layout/fragment_main">
+        android:id="@+id/memoEditor"
+        android:name="com.example.proj_memo_aos.ui.fragment.MemoEditorFragment"
+        tools:layout="@layout/fragment_memo_editor"
+        android:label="EditMemo">
+        <action
+            android:id="@+id/actionOpenMemoEditorFragment"
+            app:enterAnim="@anim/enter"
+            app:popExitAnim="@anim/pop_exit"/>
+        <argument
+            android:name="memo"
+            app:argType="com.example.proj_memo_aos.data.model.MemoDataModel"/>
     </fragment>
 
 </navigation>

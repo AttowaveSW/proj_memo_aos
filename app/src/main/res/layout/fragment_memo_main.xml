@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.proj_memo_aos.viewmodel.MainViewModel" />
+            type="com.example.proj_memo_aos.viewmodel.MemoMainViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -16,21 +16,33 @@
         android:layout_height="match_parent"
         android:background="#FFF2D5">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewMemo"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:spanCount="2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent="1"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_memo_list" />
+
+        <TextView
+            android:id="@+id/addMemo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintVertical_bias="1"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph"/>
+            android:gravity="center"
+            android:textSize="40sp"
+            android:text="+"
+            android:layout_margin="10dp"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

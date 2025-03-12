@@ -1,16 +1,23 @@
 package com.example.proj_memo_aos.viewmodel
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.example.proj_memo_aos.data.model.CheckPermissionDataModel
 import com.example.proj_memo_aos.data.model.CheckPermissionResult
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class SplashFragmentViewModel(): ViewModel() {
-
+//Hilt 라이브러리를 사용하여 의존성을 Application 단에서 직접 주입
+//Hilt 라이브러리를 사용해 Application 단에서 직접 의존성을 주입 받기 때문에 @ApplicationContext를 사용하여 Application의 Context를 제공 받아야 함
+@HiltViewModel
+class SplashViewModel @Inject constructor(
+    @ApplicationContext private val context: Context
+): ViewModel() {
     // Bluetooth 관련 권한
     private val BLUETOOTH_PERMISSIONS: Map<String, String> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         mapOf(
@@ -60,17 +67,17 @@ class SplashFragmentViewModel(): ViewModel() {
 
     private val REQUEST_PERMISSIONS: Map<String, String> = REQUIRED_PERMISSIONS + OPTIONAL_PERMISSIONS
 
-    fun checkPermissions(fragment: Fragment): CheckPermissionDataModel {
+    fun checkPermissions(): CheckPermissionDataModel {
         val checkPermissionDataModel = CheckPermissionDataModel()
 
         // 허용되지 않은 권한 확인
         checkPermissionDataModel.missingPermissions = REQUEST_PERMISSIONS.keys.toTypedArray().filter {
-            ContextCompat.checkSelfPermission(fragment.requireContext(), it) != PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(context, it) != PackageManager.PERMISSION_GRANTED
         }
 
         // 허용되지 않은 필수 권한 확인
         checkPermissionDataModel.missingRequiredPermissions = checkPermissionDataModel.missingPermissions.filter {
-            permission -> REQUIRED_PERMISSIONS.keys.toTypedArray().contains(permission)
+                permission -> REQUIRED_PERMISSIONS.keys.toTypedArray().contains(permission)
         }
 
         if (checkPermissionDataModel.missingPermissions.isEmpty()) {

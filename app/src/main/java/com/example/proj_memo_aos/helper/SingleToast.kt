@@ -3,12 +3,10 @@ import android.content.Context
 import android.widget.Toast
 
 // Toast를 출력하려는 순간 현재 Toast 메세지가 출력되는것과 상관없이 출력하고싶은 새로운 Toast 메세지를 출력하기 위해 하나의 Toast 객체만을 사용 및 관리하는 클래스
-class SingleToast {
+class SingleToast(private var context: Context) {
     private var toast: Toast
-    private var context: Context
 
-    constructor(context: Context) {
-        this.context = context
+    init {
         toast = Toast(this.context)
     }
 

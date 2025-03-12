@@ -1,5 +1,6 @@
-package com.example.proj_memo_aos.ui.fragment
+package com.example.proj_memo_aos.ui.activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
@@ -8,28 +9,25 @@ import android.os.Looper
 import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
+import androidx.activity.viewModels
 import com.example.proj_memo_aos.R
 import com.example.proj_memo_aos.data.model.CheckPermissionResult
 import com.example.proj_memo_aos.data.model.RequestPermissionsStep
-import com.example.proj_memo_aos.databinding.FragmentSplashBinding
-import com.example.proj_memo_aos.helper.SingleToast
-import com.example.proj_memo_aos.ui.base.BaseFragment
-import com.example.proj_memo_aos.viewmodel.SplashFragmentViewModel
+import com.example.proj_memo_aos.databinding.ActivitySplashBinding
+import com.example.proj_memo_aos.ui.base.BaseActivity
+import com.example.proj_memo_aos.viewmodel.SplashViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_splash, "Splash") {
+@SuppressLint("CustomSplashScreen")
+@AndroidEntryPoint
+class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
-    private val viewModel: SplashFragmentViewModel = SplashFragmentViewModel()
+    private val viewModel by viewModels<SplashViewModel>()
 
-    private lateinit var toast: SingleToast
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var settingsLauncher: ActivityResultLauncher<Intent>
 
-    // SplashFragment에서 필요한 초기화 작업 진행
-    // BaseFragment 클래스를 사용함에 따라 강제로 선언해 주어야 하며 해당 함수는 onCreateView 단계에서 시행 됨 (BaseFragment 참고)
     override fun setInitialize(){
-
         setVariable()
         setListeners()
 
@@ -39,11 +37,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
         }, 2000)
     }
 
-    private fun setVariable(){
+    private fun setVariable() {
         // Databinding: ViewModel 동기화
         binding.viewModel = viewModel
-
-        toast = SingleToast(this.requireActivity())
     }
 
     private fun setListeners() {
@@ -65,7 +61,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
     }
 
     private fun requestPermissionProcedure(requestPermissionsStatusMachine: RequestPermissionsStep) {
-        val checkPermissionsResult = viewModel.checkPermissions(this)
+        val checkPermissionsResult = viewModel.checkPermissions()
 
         when (checkPermissionsResult.checkPermissionsResult) {
             // 모든 권한이 허용 되었거나 필수 권한이 허용 되었을 경우
@@ -103,10 +99,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
     private fun goToMain() {
         Handler(Looper.getMainLooper()).postDelayed({
             // 1초 동안 Splash 화면 노출 후 Main으로 이동
-            findNavController().navigate(R.id.actionSplashToMain, null, navOptions {
-                // splash까지의 스택을 제거하며 이동
-                popUpTo(R.id.splash) { inclusive = true }
-            })
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+            finish()
         }, 1000)
     }
 
@@ -114,12 +110,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
     private fun showSettingsDialog(settingsLauncher: ActivityResultLauncher<Intent>, deniedRequiresPermissions: List<String>) {
         val deniedRequiresPermissionsString = getPermissionString(deniedRequiresPermissions)
 
-        AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(this)
             .setTitle("권한 설정 필요")
             .setMessage("이 앱을 사용하려면 ${deniedRequiresPermissionsString.joinToString(", ")} 권한을 허용해야 합니다.")
             .setPositiveButton("설정으로 이동") { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                intent.data = Uri.parse("package:" + requireContext().packageName)
+                intent.data = Uri.parse("package:$packageName")
 
                 settingsLauncher.launch(intent)
             }
@@ -150,7 +146,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
     private fun finishRequiredPermissionsDenied(deniedRequiresPermissions: List<String>) {
         val deniedRequiresPermissionsLabel = getPermissionString(deniedRequiresPermissions)
 
-        toast.showMessage("이 앱을 사용하려면 ${deniedRequiresPermissionsLabel.joinToString(", ")} 권한을 허용해야 합니다.")
-        this.requireActivity().finish()
+        singleToast.showMessage("이 앱을 사용하려면 ${deniedRequiresPermissionsLabel.joinToString(", ")} 권한을 허용해야 합니다.")
+        this.finish()
     }
 }
