@@ -15,6 +15,11 @@ class MemoEditorViewModel: ViewModel() {
         _memo.value = memo
     }
 
+    fun setTitle(title: String) {
+        _memo.value?.title = title
+        _memo.postValue(_memo.value)
+    }
+
     fun changeMemo(memo: MemoDataModel) {
         _memo.value?.apply {
             title = memo.title

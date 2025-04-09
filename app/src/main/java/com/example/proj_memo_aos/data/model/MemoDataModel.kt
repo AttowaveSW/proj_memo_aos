@@ -12,7 +12,8 @@ data class MemoDataModel (
     var content: String = "",
     val createTimestamp: Calendar = Calendar.getInstance(),
     var editTimestamp: Calendar = Calendar.getInstance(),
-    val uid: String = UUID.randomUUID().toString()
+    val uid: String = UUID.randomUUID().toString(),
+    var isHighlight: Boolean = false
 ): Parcelable {
     //Data가 수정될 때 마지막 수정시간을 지정하는 함수
     fun setEditTimestampToCurrentTime() {

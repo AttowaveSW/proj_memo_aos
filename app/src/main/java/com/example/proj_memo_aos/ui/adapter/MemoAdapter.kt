@@ -1,6 +1,5 @@
 package com.example.proj_memo_aos.ui.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +29,7 @@ class MemoAdapter(
         holder.bind(memoList[position])
     }
 
-    // 수정중입니다.
+    // List clear -> addAll -> notifyDataSetChanged() 방식을 변경하려고 하는중이나 어려움...
     fun updateData(newList: List<MemoDataModel>) {
         /*
         val sortedNewList = newList.sortedWith(compareByDescending { it.editTimestamp })
@@ -107,6 +106,20 @@ class MemoAdapter(
         notifyDataSetChanged()
     }
 
+    //하이라이트 표시를 위한 함수 (TBD)
+    fun toggleMemoListHighlight(query: String) {
+        memoList.map { memo ->
+            if (memo.title.contains(query) ||
+                memo.content.contains(query)
+                ) {
+                memo.isHighlight = true
+            } else {
+                memo.isHighlight = false
+            }
+        }
+    }
+
+    //memo 각각의 View에 접근하기 위한 ViewHolder Class
     inner class ViewHolder(private val binding: ItemMemoListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MemoDataModel) {
             with(binding) {

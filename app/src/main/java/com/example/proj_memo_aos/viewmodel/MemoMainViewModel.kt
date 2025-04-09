@@ -39,19 +39,21 @@ class MemoMainViewModel @Inject constructor(
             val currentList = _memoList.value?.toMutableList() ?: mutableListOf()
             if (index in currentList.indices) {
                 currentList[index] = newMemo
-                _memoList.value = currentList
-                repository.saveMemoList(currentList)
+                _memoList.postValue(currentList)
             }
         }
     }
 
     fun removeMemo(memo: MemoDataModel) {
-        _memoList.value = _memoList.value?.minus(memo) ?: emptyList()
-    }
+        val index = _memoList.value?.indexOfFirst { it.uid == memo.uid }!!
 
-    fun saveMemoListInRepository() {
-        val currentList = _memoList.value?.toMutableList() ?: mutableListOf()
-        repository.saveMemoList(currentList)
+        if(index != -1) {
+            val currentList = _memoList.value?.toMutableList() ?: mutableListOf()
+            if (index in currentList.indices) {
+                currentList.removeAt(index)
+                _memoList.postValue(currentList)
+            }
+        }
     }
 
     override fun onCleared() {

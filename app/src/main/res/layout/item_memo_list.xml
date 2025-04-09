@@ -25,9 +25,9 @@
             android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/titleLineView"
+            app:layout_constraintBottom_toTopOf="@+id/contentTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="1"
@@ -40,30 +40,19 @@
             android:lineSpacingExtra="0dp"
             android:text="@{itemChapter.title}"/>
 
-        <View
-            android:id="@+id/titleLineView"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_centerInParent="true"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-            app:layout_constraintBottom_toTopOf="@+id/contentTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="#AAAAAA"/>
-
         <TextView
             android:id="@+id/contentTextView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="top"
-            app:layout_constraintTop_toBottomOf="@+id/titleLineView"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
             app:layout_constraintBottom_toTopOf="@+id/contentLineView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="1"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintVertical_bias="0"
-            android:autoSizeMaxTextSize="13sp"
+            android:autoSizeMaxTextSize="10sp"
             android:text="@{itemChapter.content}"/>
 
         <View

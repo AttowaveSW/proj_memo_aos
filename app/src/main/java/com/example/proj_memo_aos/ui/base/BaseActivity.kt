@@ -10,7 +10,7 @@ import com.example.proj_memo_aos.helper.SingleToast
 // BaseActivity추상 클래스를 사용하여 모든 Activity에서 공통으로 사용하는 변수 및 함수 작성
 abstract class BaseActivity<VB : ViewDataBinding>(private val layoutResId: Int) : AppCompatActivity() {
 
-    protected lateinit var binding: VB
+    lateinit var binding: VB
 
     lateinit var singleToast: SingleToast
 

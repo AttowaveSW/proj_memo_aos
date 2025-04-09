@@ -15,7 +15,7 @@ import com.example.proj_memo_aos.helper.SingleToast
 abstract class BaseFragment<VB : ViewDataBinding>(private val layoutResId: Int, var fragmentName: String) : Fragment() {
 
     protected lateinit var binding: VB
-    private lateinit var singleToast: SingleToast
+    lateinit var singleToast: SingleToast
 
     private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {

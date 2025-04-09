@@ -12,9 +12,13 @@
         android:label="MainMemo">
         <action
             android:id="@+id/actionMemoMainToMemoEditor"
-            app:destination="@+id/memoEditor"
-            app:enterAnim="@anim/enter"
-            app:popExitAnim="@anim/pop_exit"/>
+            app:destination="@+id/memoEditor"/>
+        <argument
+            android:name="memo"
+            app:argType="com.example.proj_memo_aos.data.model.MemoDataModel"/>
+        <argument
+            android:name="editorResult"
+            app:argType="com.example.proj_memo_aos.helper.MemoEditorResult"/>
     </fragment>
 
     <fragment
@@ -22,10 +26,6 @@
         android:name="com.example.proj_memo_aos.ui.fragment.MemoEditorFragment"
         tools:layout="@layout/fragment_memo_editor"
         android:label="EditMemo">
-        <action
-            android:id="@+id/actionOpenMemoEditorFragment"
-            app:enterAnim="@anim/enter"
-            app:popExitAnim="@anim/pop_exit"/>
         <argument
             android:name="memo"
             app:argType="com.example.proj_memo_aos.data.model.MemoDataModel"/>

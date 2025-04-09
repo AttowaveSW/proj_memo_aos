@@ -12,55 +12,46 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="30dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:background="@drawable/memo_bg"
+        android:background="#FFF2F5"
         android:transitionName="memoTransition">
 
-        <EditText
-            android:id="@+id/titleTextView"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:title="@{viewModel.memo.title}"
+            tools:ignore="MissingConstraints"
+            app:menu="@menu/menu_edit_toolbar"
+            android:background="@android:color/transparent"/>
+
+        <View
+            android:id="@+id/titleLineView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerInParent="true"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintBottom_toTopOf="@+id/contentTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintVertical_bias="0"
-            android:lineSpacingExtra="0dp"
-            android:text="@={viewModel.memo.title}"/>
+            android:background="#AAAAAA"/>
 
         <EditText
             android:id="@+id/contentTextView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="top"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@android:color/transparent"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-            app:layout_constraintBottom_toTopOf="@+id/bottomEmptyView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintVertical_bias="0"
-            android:text="@={viewModel.memo.content}"/>
-
-        <View
-            android:id="@+id/bottomEmptyView"
-            android:layout_width="0dp"
-            android:layout_height="20dp"
-            app:layout_constraintTop_toTopOf="@+id/contentTextView"
+            app:layout_constraintTop_toBottomOf="@+id/titleLineView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="1"/>
+            app:layout_constraintVertical_bias="0"
+            android:text="@={viewModel.memo.content}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
