@@ -54,7 +54,8 @@
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Proj_memo_aos"/>
 
         <meta-data
             android:name="com.google.dagger.hilt.android.modules"

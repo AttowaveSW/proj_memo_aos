@@ -18,6 +18,22 @@ class SharedPreferencesMemoRepository @Inject constructor(
 
     companion object {
         private const val PREF_MEMO = "memo_list"
+        private const val PREF_SPAN_COUNT = "recycler_view_span_count"
+    }
+
+    fun loadRecyclerViewSpanCount(): Int {
+        val jsonString = sharedPreferences.getString(PREF_SPAN_COUNT, null)
+
+        return if (jsonString != null) {
+            gson.fromJson(jsonString, Int::class.java)
+        } else {
+            -1
+        }
+    }
+
+    fun saveRecyclerViewSpanCount(count: Int) {
+        val jsonString = gson.toJson(count)
+        sharedPreferences.edit().putString(PREF_SPAN_COUNT, jsonString).apply()
     }
 
     fun loadMemoList(): List<MemoDataModel> {

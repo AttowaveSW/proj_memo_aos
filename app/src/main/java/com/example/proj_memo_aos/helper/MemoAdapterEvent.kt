@@ -12,3 +12,13 @@ enum class MemoClickType{
 interface OnMemoClick {
     fun onMemoClick(memo: MemoDataModel, memoClickType: MemoClickType)
 }
+
+//recyclerview의 선택모드 변경 감지를 위한 interface
+interface OnSelectionModeChange {
+    fun onSelectionModeChange(isSelectionMode: Boolean)
+}
+
+//recyclerview의 선택된 item 개수 감지를 위한 interface
+interface OnItemSelectedCountChange {
+    fun onItemSelectedCountChange(count: Int)
+}

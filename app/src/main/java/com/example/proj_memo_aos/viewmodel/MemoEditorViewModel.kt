@@ -11,7 +11,10 @@ class MemoEditorViewModel: ViewModel() {
     private val _memo = MutableLiveData<MemoDataModel>()
     val memo: LiveData<MemoDataModel> get() = _memo
 
+    private lateinit var beforeMemo: MemoDataModel
+
     fun setMemo(memo: MemoDataModel) {
+        beforeMemo = memo.copy()
         _memo.value = memo
     }
 
@@ -26,5 +29,12 @@ class MemoEditorViewModel: ViewModel() {
             content = memo.content
             editTimestamp = memo.editTimestamp
         }
+    }
+
+    fun checkMemoToBeSaved(): Boolean {
+        val isSameMemo = _memo.value?.title == beforeMemo.title && _memo.value?.content == beforeMemo.content
+        val isEmptyMemo = _memo.value?.title == "" && _memo.value?.content == ""
+
+        return !isSameMemo && !isEmptyMemo
     }
 }

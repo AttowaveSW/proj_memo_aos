@@ -12,7 +12,9 @@
         android:label="MainMemo">
         <action
             android:id="@+id/actionMemoMainToMemoEditor"
-            app:destination="@+id/memoEditor"/>
+            app:destination="@+id/memoEditor"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_down"/>
         <argument
             android:name="memo"
             app:argType="com.example.proj_memo_aos.data.model.MemoDataModel"/>

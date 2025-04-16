@@ -12,29 +12,32 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFF2F5"
+        android:background="@color/memoContent"
         android:transitionName="memoTransition">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:title="@{viewModel.memo.title}"
             tools:ignore="MissingConstraints"
+            app:popupTheme="@style/CustomPopupMenu"
             app:menu="@menu/menu_edit_toolbar"
-            android:background="@android:color/transparent"/>
+            android:background="@color/memoBackground"
+            android:fitsSystemWindows="true">
 
-        <View
-            android:id="@+id/titleLineView"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_centerInParent="true"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintBottom_toTopOf="@+id/contentTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="#AAAAAA"/>
+            <EditText
+                android:id="@+id/editTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                android:hint="제목 입력"
+                android:text="@={viewModel.memo.title}"
+                android:singleLine="true"
+                android:gravity="center_vertical"/>
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <EditText
             android:id="@+id/contentTextView"
@@ -46,7 +49,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@android:color/transparent"
-            app:layout_constraintTop_toBottomOf="@+id/titleLineView"
+            android:hint="내용 입력"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

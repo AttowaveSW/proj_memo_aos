@@ -2,8 +2,45 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menuSearch"
+        android:id="@+id/menoSearch"
         android:title="search"
         android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="always"/>
+
+    <group
+        android:id="@+id/mainGroup">
+
+        <item
+            android:id="@+id/editMode"
+            android:title="편집"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/changeViewType"
+            android:title="보기방식"
+            app:showAsAction="never">
+
+            <menu>
+                <item
+                    android:id="@+id/viewTypeRow3"
+                    android:title="작은 격자"
+                    app:showAsAction="never"/>
+
+                <item
+                    android:id="@+id/viewTypeRow2"
+                    android:title="큰 격자"
+                    app:showAsAction="never"/>
+
+                <item
+                    android:id="@+id/viewTypeRow1"
+                    android:title="목록"
+                    app:showAsAction="never"/>
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/allDelete"
+            android:title="모두 삭제"
+            app:showAsAction="never"/>
+    </group>
 </menu>
