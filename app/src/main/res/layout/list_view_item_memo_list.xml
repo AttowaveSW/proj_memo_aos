@@ -38,7 +38,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:background="@drawable/memo_bg">
+            android:background="@drawable/memo_bg"
+            android:tag="contents">
 
             <LinearLayout
                 android:layout_width="match_parent"

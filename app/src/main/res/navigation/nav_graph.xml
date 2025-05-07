@@ -21,6 +21,11 @@
         <argument
             android:name="editorResult"
             app:argType="com.example.proj_memo_aos.helper.MemoEditorResult"/>
+        <action
+            android:id="@+id/actionGoToSetting"
+            app:destination="@+id/setting"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_down"/>
     </fragment>
 
     <fragment
@@ -31,6 +36,37 @@
         <argument
             android:name="memo"
             app:argType="com.example.proj_memo_aos.data.model.MemoDataModel"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.example.proj_memo_aos.ui.fragment.MapFragment"
+        tools:layout="@layout/fragment_map"
+        android:label="map">
+        <action
+            android:id="@+id/actionGoToSetting"
+            app:destination="@+id/setting"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_down"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/setting"
+        android:name="com.example.proj_memo_aos.ui.fragment.SettingFragment"
+        tools:layout="@layout/fragment_setting"
+        android:label="setting">
+        <action
+            android:id="@+id/actionSettingToDeveloperInfo"
+            app:destination="@+id/developerInfo"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_down"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/developerInfo"
+        android:name="com.example.proj_memo_aos.ui.fragment.DeveloperInfoFragment"
+        tools:layout="@layout/fragment_developer_info"
+        android:label="developerInfo">
     </fragment>
 
 </navigation>

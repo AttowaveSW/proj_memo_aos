@@ -60,6 +60,9 @@
         <meta-data
             android:name="com.google.dagger.hilt.android.modules"
             android:value=".data.module.AppModule" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDKzkCMwOT0amwG9M3GSOiaxyJOzLivhMY"/>
     </application>
 
 </manifest>

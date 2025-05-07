@@ -1,5 +1,6 @@
 package com.example.proj_memo_aos.ui.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.transition.AutoTransition
@@ -14,12 +15,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.proj_memo_aos.R
 import com.example.proj_memo_aos.data.model.MemoDataModel
 import com.example.proj_memo_aos.databinding.FragmentMemoMainBinding
+import com.example.proj_memo_aos.helper.BaseApplication
 import com.example.proj_memo_aos.helper.MemoAppDialog
 import com.example.proj_memo_aos.helper.MemoClickType
 import com.example.proj_memo_aos.helper.MemoEditorResult
 import com.example.proj_memo_aos.helper.OnItemSelectedCountChange
 import com.example.proj_memo_aos.helper.OnMemoClick
 import com.example.proj_memo_aos.helper.OnSelectionModeChange
+import com.example.proj_memo_aos.helper.Utils
+import com.example.proj_memo_aos.ui.activity.MainActivity
 import com.example.proj_memo_aos.ui.adapter.MemoAdapter
 import com.example.proj_memo_aos.ui.base.BaseFragment
 import com.example.proj_memo_aos.viewmodel.MemoMainViewModel
@@ -50,21 +54,24 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
         }
     }
 
-    override fun onBackPressed() {
+    private fun setOnBackPressed() {
         /* 뒤로가기 키 눌렸을 때
            편집모드(selection mode)일 경우 편집모드 종료
            검색모드(search mode)일 경우 검색모드 종료
            둘 다 아닐 경우 기존 Back key 동작 유지
          */
-        if (adapter.isSelectionMode) {
-            adapter.exitToSelectionMode()
-        } else if (viewModel.isSearchMode) {
-            disableSearchMode()
-        } else {
-            super.onBackPressed()
+        setOnBackPressed {
+            if (adapter.isSelectionMode) {
+                adapter.exitToSelectionMode()
+            } else if (viewModel.isSearchMode) {
+                disableSearchMode()
+            } else {
+                defaultBackPressed()
+            }
         }
     }
 
+    @SuppressLint("DiscouragedApi", "InternalInsetResource")
     private fun setVariable(){
         //Databinding: ViewModel 동기화
         binding.viewModel = viewModel
@@ -98,6 +105,7 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
         //MemoList를 표기할 adapter 선언
         adapter = MemoAdapter(binding.recyclerviewMemo,
             arrayListOf(),
+            (requireActivity().application as BaseApplication).backgroundColor.value!!,
             object : OnMemoClick {
                 override fun onMemoClick(memo: MemoDataModel, memoClickType: MemoClickType) {
                     /* recyclerView의 item 클릭 이벤트 리스너
@@ -140,6 +148,9 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
                 }
             })
         binding.recyclerviewMemo.adapter = adapter
+
+        // 뒤로가기 설정
+        setOnBackPressed()
     }
 
     private fun setListeners() {
@@ -190,7 +201,8 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
             //Toolbar NavigationIcon을 메뉴 아이콘으로 변경
             setNavigationIcon(R.drawable.baseline_menu_black_24dp)
             setNavigationOnClickListener {
-                //TBD
+                // 메뉴 아이콘 클릭시 Drawer open
+                openDrawer()
             }
 
             //Toolbar 메뉴 List item 대한 ClickListener
@@ -309,7 +321,6 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
             binding.selectionModeToolbar.visibility = View.VISIBLE
             binding.topTextTitle.text = "노트선택"
             binding.selectionModeToolbarTitle.text = "노트선택"
-            setSlideButton(true)
         } else {
             /* 선택모드 disable
                selectionModeToolbar의 visibility를 제어하여 기존 toolbar 보여짐
@@ -318,18 +329,16 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
             binding.selectionModeToolbar.visibility = View.GONE
             binding.topTextTitle.text = "메모장"
             binding.selectAllButton.isChecked = false
-            setSlideButton(false)
         }
+
+        setSlideButton(isSelectionMode)
+        setDrawer()
     }
 
     // isDeleteMode에 따라 memo 추가 버튼이, 삭제 버튼이 나타나거나 없어지는 애니메이션 출력 함수
     private fun setSlideButton(isDeleteMode: Boolean) {
         val constraintSet = ConstraintSet()
         constraintSet.clone(binding.mainLayout)
-
-        fun dpToPx(dp: Int): Int {
-            return (dp * resources.displayMetrics.density).toInt()
-        }
 
         if (isDeleteMode) {
             constraintSet.clear(R.id.delMemoBtn, ConstraintSet.START)
@@ -346,8 +355,8 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.END
             )
-            constraintSet.setMargin(R.id.delMemoBtn, ConstraintSet.END, dpToPx(15))
-            constraintSet.setMargin(R.id.addMemoBtn, ConstraintSet.START, dpToPx(15))
+            constraintSet.setMargin(R.id.delMemoBtn, ConstraintSet.END, Utils.dpToPx(resources, 15))
+            constraintSet.setMargin(R.id.addMemoBtn, ConstraintSet.START, Utils.dpToPx(resources, 15))
         } else {
             constraintSet.clear(R.id.delMemoBtn, ConstraintSet.END)
             constraintSet.clear(R.id.addMemoBtn, ConstraintSet.START)
@@ -363,8 +372,8 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.END
             )
-            constraintSet.setMargin(R.id.delMemoBtn, ConstraintSet.START, dpToPx(15))
-            constraintSet.setMargin(R.id.addMemoBtn, ConstraintSet.END, dpToPx(15))
+            constraintSet.setMargin(R.id.delMemoBtn, ConstraintSet.START, Utils.dpToPx(resources, 15))
+            constraintSet.setMargin(R.id.addMemoBtn, ConstraintSet.END, Utils.dpToPx(resources, 15))
         }
 
         TransitionManager.beginDelayedTransition(binding.mainLayout, AutoTransition().apply {
@@ -386,6 +395,7 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
         binding.searchText.requestFocus()
         imm.showSoftInput(binding.searchText, InputMethodManager.SHOW_IMPLICIT)
         viewModel.enableSearchMode(initKeyword)
+        setDrawer()
     }
 
     private fun disableSearchMode() {
@@ -394,6 +404,16 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
          */
         binding.searchModeToolbar.visibility = View.GONE
         viewModel.disableSearchMode()
+        setDrawer()
+    }
+
+    private fun setDrawer() {
+        // 검색 모드이거나 선택 모드일 경우 Drawer를 잠금
+        if(viewModel.isSearchMode || viewModel.isSelectionMode) {
+            (requireActivity() as MainActivity).setDrawerLock()
+        } else {
+            (requireActivity() as MainActivity).setDrawerUnlock()
+        }
     }
 
     //각 Memo 객체를 눌렀을 때의 처리
@@ -420,12 +440,10 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
     private fun changeMemoSpanCount(count: Int) {
         val layoutManager = binding.recyclerviewMemo.layoutManager
         if (layoutManager is GridLayoutManager) {
-            if (layoutManager.spanCount != count) {
-                adapter.setViewType(count != 1)
-                layoutManager.spanCount = count
-                layoutManager.requestLayout()
-                viewModel.changeRecyclerViewSpanCount(count)
-            }
+            adapter.setViewType(count != 1)
+            layoutManager.spanCount = count
+            layoutManager.requestLayout()
+            viewModel.changeRecyclerViewSpanCount(count)
         }
     }
 

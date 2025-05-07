@@ -11,25 +11,113 @@
         <import type="android.view.View" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/memoBackground">
+        android:background="@color/memoBackground"
+        android:tag="background"
+        android:fitsSystemWindows="false">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintVertical_bias="1"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/memoBackground"
+            android:tag="background"
+            android:fitsSystemWindows="false">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintVertical_bias="1"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_graph"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/drawer_bg"
+            android:tag="background"
+            android:fitsSystemWindows="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/nav_view"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:orientation="vertical"
+                    tools:ignore="NotSibling">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:padding="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/settingButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/baseline_settings_24"/>
+
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:id="@+id/menuRadioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/main_navigation_memo"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@android:color/transparent"
+                            android:tag="contents"
+                            android:textSize="18sp"
+                            android:button="@null"
+                            android:paddingLeft="20dp"
+                            android:text="메모장" />
+
+                        <RadioButton
+                            android:id="@+id/main_navigation_map"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@android:color/transparent"
+                            android:tag="contents"
+                            android:textSize="18sp"
+                            android:button="@null"
+                            android:paddingLeft="20dp"
+                            android:text="지도" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.navigation.NavigationView>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

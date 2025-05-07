@@ -26,8 +26,8 @@ class MemoEditorFragment: BaseFragment<FragmentMemoEditorBinding>(R.layout.fragm
     }
 
     //뒤로가기 키를 override하여 클릭시 저장 여부를 묻는 AlertDialog 띄워줌
-    override fun onBackPressed() {
-        backKeyProcess()
+    private fun setOnBackPressed() {
+        setOnBackPressed { backKeyProcess() }
     }
 
     private fun setVariable() {
@@ -66,6 +66,9 @@ class MemoEditorFragment: BaseFragment<FragmentMemoEditorBinding>(R.layout.fragm
                 }
             }
         }
+
+        // 뒤로가기 설정
+        setOnBackPressed()
     }
 
     private fun backKeyProcess() {

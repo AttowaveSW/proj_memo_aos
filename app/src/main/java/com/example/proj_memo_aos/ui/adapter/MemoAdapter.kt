@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
+import com.example.proj_memo_aos.data.model.BackgroundColorDataModel
 import com.example.proj_memo_aos.data.model.MemoDataModel
 import com.example.proj_memo_aos.databinding.GridViewItemMemoListBinding
 import com.example.proj_memo_aos.databinding.ListViewItemMemoListBinding
@@ -21,6 +22,7 @@ import com.example.proj_memo_aos.helper.OnSelectionModeChange
 class MemoAdapter(
     private var recyclerView: RecyclerView,
     private var memoList: ArrayList<MemoDataModel>,
+    private var backgroundColor: BackgroundColorDataModel,
     private var onClickListener: OnMemoClick,
     private var onSelectionModeChangeListener: OnSelectionModeChange,
     private var onItemSelectedCountChangeListener: OnItemSelectedCountChange
@@ -98,15 +100,17 @@ class MemoAdapter(
         val list = newList.sortedWith(compareByDescending { it.editTimestamp })
         val listCountDiff = memoList.count() - list.count()
 
-        memoList.clear()
-        memoList.addAll(list)
+        if(memoList != list) {
+            memoList.clear()
+            memoList.addAll(list)
 
-        selectionMap.clear()
-        for (memo in memoList) {
-            selectionMap[memo] = false
+            selectionMap.clear()
+            for (memo in memoList) {
+                selectionMap[memo] = false
+            }
+
+            viewUpdate(listCountDiff)
         }
-
-        viewUpdate(listCountDiff)
     }
 
     /**
@@ -224,6 +228,7 @@ class MemoAdapter(
      * 뷰 갱신 처리 (리스트 추가/삭제 반영)
      */
     private fun viewUpdate(listCountDiff: Int) {
+
         if(listCountDiff > 0) {
             for (i in (memoList.count() + listCountDiff) downTo memoList.count()) {
                 notifyItemRemoved(i)
@@ -242,6 +247,29 @@ class MemoAdapter(
         checkBox.isChecked = !checkBox.isChecked
         selectionMap[memo] = checkBox.isChecked
         onItemSelectedCountChangeListener.onItemSelectedCountChange(selectionMap.count { it.value })
+    }
+
+    /**
+     * backColor 및 contentsColor로 색 설정
+     * adapter의 view들은 BaseActivity 및 BaseFragment에서 변경해도 적용되지 않으므로 따로 색을 변경해줌
+     */
+    private fun setBackgroundColors(root: View) {
+        // tag가 background 및 contents로 선언되어있는 View들의 backgournd 색을 설정된 background color에 맞게 변경
+        // 재귀 함수를 통해 하위 자식 뷰들도 모두 적용
+        fun traverse(view: View) {
+            when (view.tag) {
+                "background" -> { view.background.setTint(backgroundColor.backColor) }
+                "contents" -> { view.background.setTint(backgroundColor.contentsColor) }
+            }
+
+            if (view is ViewGroup) {
+                for (i in 0 until view.childCount) {
+                    traverse(view.getChildAt(i))
+                }
+            }
+        }
+
+        traverse(root)
     }
 
     /**
@@ -338,6 +366,7 @@ class MemoAdapter(
             with(binding) {
                 itemChapter = item
                 viewBinding(root, cardView, selectedCheckBox, item)
+                setBackgroundColors(binding.root)
             }
         }
     }
@@ -352,6 +381,7 @@ class MemoAdapter(
             with(binding) {
                 itemChapter = item
                 viewBinding(root, cardView, selectedCheckBox, item)
+                setBackgroundColors(binding.root)
             }
         }
     }

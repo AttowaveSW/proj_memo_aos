@@ -8,5 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="memoBackground">#FFF2D5</color>
+    <color name="memoBackgroundGrayOut">#FFEBD9BD</color>
     <color name="memoContent">#FFF2E5</color>
+
+    <color name="memoBackgroundWhite">#FFF2D5</color>
+    <color name="memoBackgroundGrayOutWhite">#FFEBD9BD</color>
+    <color name="memoContentWhite">#FFF2E5</color>
 </resources>

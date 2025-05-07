@@ -53,8 +53,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
         // 설정창 Launcher
         settingsLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
+                ActivityResultContracts.StartActivityForResult()
+                ) {
             // 최종 거부 Step으로 이동
             requestPermissionProcedure(RequestPermissionsStep.StepCheckAndFinish)
         }

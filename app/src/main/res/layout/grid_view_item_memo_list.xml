@@ -35,7 +35,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="5dp"
-                android:background="@drawable/memo_bg">
+                android:background="@drawable/memo_bg"
+                android:tag="contents">
 
                 <CheckBox
                     android:visibility="gone"
