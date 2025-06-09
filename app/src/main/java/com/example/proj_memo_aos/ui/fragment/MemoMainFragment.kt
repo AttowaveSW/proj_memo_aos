@@ -401,7 +401,11 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
     private fun disableSearchMode() {
         /* 검색모드 disable
            searchModeToolbar의 visibility를 제어하여 기존 toolbar 보여짐
+           기본 소프트 키보드를 없애줌
          */
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = binding.searchText
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
         binding.searchModeToolbar.visibility = View.GONE
         viewModel.disableSearchMode()
         setDrawer()
@@ -410,6 +414,7 @@ class MemoMainFragment: BaseFragment<FragmentMemoMainBinding>(R.layout.fragment_
     private fun setDrawer() {
         // 검색 모드이거나 선택 모드일 경우 Drawer를 잠금
         if(viewModel.isSearchMode || viewModel.isSelectionMode) {
+            binding.mainToolbar.isEnabled = false
             (requireActivity() as MainActivity).setDrawerLock()
         } else {
             (requireActivity() as MainActivity).setDrawerUnlock()

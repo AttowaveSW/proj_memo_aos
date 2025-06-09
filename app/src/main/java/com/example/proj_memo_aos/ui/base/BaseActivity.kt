@@ -5,7 +5,11 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat.setDecorFitsSystemWindows
@@ -25,7 +29,7 @@ abstract class BaseActivity<VB : ViewDataBinding>(private val layoutResId: Int) 
 
     lateinit var singleToast: SingleToast
 
-    lateinit var backgroundColor: BackgroundColorDataModel
+    private lateinit var backgroundColor: BackgroundColorDataModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +54,13 @@ abstract class BaseActivity<VB : ViewDataBinding>(private val layoutResId: Int) 
 
         // 앱에 설정된 background color로 배경색 설정
         setBackgroundColors(backgroundColor)
+        changedBackgroundColor(backgroundColor)
 
         app.backgroundColor.observe(this) { backgroundColor ->
             // 설정된 background color가 변경되면 activity의 모든 View의 background color를 변경
             this.backgroundColor = backgroundColor
             setBackgroundColors(backgroundColor)
+            changedBackgroundColor(backgroundColor)
         }
     }
 
@@ -66,21 +72,7 @@ abstract class BaseActivity<VB : ViewDataBinding>(private val layoutResId: Int) 
 
     // 모든 View의 background color를 설정하는 함수
     private fun setBackgroundColors(backgroundColor: BackgroundColorDataModel) {
-        // tag가 background 및 contents로 선언되어있는 View들의 backgournd 색을 설정된 background color에 맞게 변경
-        val allViews = Utils.getAllChildViews(binding.root, true)
-        allViews.forEach { view ->
-            when (view.tag) {
-                "background" -> { view.background.setTint(backgroundColor.backColor) }
-                "contents" -> { view.background.setTint(backgroundColor.contentsColor) }
-                "button" -> {
-                    if(view is ImageButton) {
-                        ImageViewCompat.setImageTintList(view, ColorStateList.valueOf(backgroundColor.buttonColor))
-                    }
-                }
-            }
-
-
-        }
+        backgroundColor.setTagColor(binding.root)
     }
 
     // Background 변경 시 동작하는 함수

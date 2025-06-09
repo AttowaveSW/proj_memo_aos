@@ -50,10 +50,11 @@ class SettingFragment: BaseFragment<FragmentSettingBinding>(R.layout.fragment_se
     }
 
     override fun changedBackgroundColor(backgroundColor: BackgroundColorDataModel) {
-        // popup menu가 보여질 때 shape들의 색을 현재 설정된 backgroundColor.contentsColor 색으로 변경
-        shapeTop.setColor(backgroundColor.contentsColor)
-        shapeMiddle.setColor(backgroundColor.contentsColor)
-        shapeBottom.setColor(backgroundColor.contentsColor)
+        // popup menu가 보여질 때 shape들의 색을 현재 설정된 "contents" 색으로 변경
+        val color = backgroundColor.getTagColor("contents")
+        shapeTop.setColor(color)
+        shapeMiddle.setColor(color)
+        shapeBottom.setColor(color)
 
         // 변경된 backgroundColor의 displayName을 가져와 colorSpinner에 표시
         val displayName = backgroundColor.displayName

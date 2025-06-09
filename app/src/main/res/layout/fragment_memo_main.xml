@@ -90,59 +90,66 @@
 
                     </com.google.android.material.appbar.MaterialToolbar>
 
-                    <LinearLayout
+                    <com.google.android.material.appbar.MaterialToolbar
                         android:id="@+id/selectionModeToolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         android:layout_gravity="bottom"
                         android:background="@color/memoBackground"
                         android:tag="background"
-                        android:orientation="horizontal"
                         android:visibility="gone"
-                        app:layout_collapseMode="pin">
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/CustomPopupMenu">
 
                         <LinearLayout
-                            android:id="@+id/selectAllButtonLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="15dp"
-                            android:orientation="vertical">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
-                            <CheckBox
-                                android:id="@+id/selectAllButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:button="@drawable/custom_checkbox"
-                                android:clickable="false"
-                                android:focusable="false"
-                                android:foreground="@null"
-                                android:gravity="center" />
-
-                            <TextView
+                            <LinearLayout
+                                android:id="@+id/selectAllButtonLayout"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:background="@null"
-                                android:clickable="false"
-                                android:focusable="false"
-                                android:foreground="@null"
-                                android:gravity="center"
-                                android:text="전체"
-                                android:textSize="12sp" />
+                                android:orientation="vertical">
+
+                                <CheckBox
+                                    android:id="@+id/selectAllButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:button="@drawable/custom_checkbox"
+                                    android:clickable="false"
+                                    android:focusable="false"
+                                    android:foreground="@null"
+                                    android:gravity="center"
+                                    android:tag="checkBox"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:background="@null"
+                                    android:clickable="false"
+                                    android:focusable="false"
+                                    android:foreground="@null"
+                                    android:gravity="center"
+                                    android:text="전체"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/selectionModeToolbarTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="15dp"
+                                android:gravity="center_vertical"
+                                android:textAppearance="?attr/textAppearanceSearchResultTitle" />
+
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/selectionModeToolbarTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="15dp"
-                            android:gravity="center_vertical"
-                            android:textAppearance="?attr/textAppearanceSearchResultTitle" />
-
-                    </LinearLayout>
+                    </com.google.android.material.appbar.MaterialToolbar>
 
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 

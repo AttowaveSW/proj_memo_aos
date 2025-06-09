@@ -18,6 +18,7 @@ import com.example.proj_memo_aos.helper.MemoClickType
 import com.example.proj_memo_aos.helper.OnItemSelectedCountChange
 import com.example.proj_memo_aos.helper.OnMemoClick
 import com.example.proj_memo_aos.helper.OnSelectionModeChange
+import com.example.proj_memo_aos.helper.Utils
 
 class MemoAdapter(
     private var recyclerView: RecyclerView,
@@ -254,22 +255,7 @@ class MemoAdapter(
      * adapter의 view들은 BaseActivity 및 BaseFragment에서 변경해도 적용되지 않으므로 따로 색을 변경해줌
      */
     private fun setBackgroundColors(root: View) {
-        // tag가 background 및 contents로 선언되어있는 View들의 backgournd 색을 설정된 background color에 맞게 변경
-        // 재귀 함수를 통해 하위 자식 뷰들도 모두 적용
-        fun traverse(view: View) {
-            when (view.tag) {
-                "background" -> { view.background.setTint(backgroundColor.backColor) }
-                "contents" -> { view.background.setTint(backgroundColor.contentsColor) }
-            }
-
-            if (view is ViewGroup) {
-                for (i in 0 until view.childCount) {
-                    traverse(view.getChildAt(i))
-                }
-            }
-        }
-
-        traverse(root)
+        backgroundColor.setTagColor(root)
     }
 
     /**

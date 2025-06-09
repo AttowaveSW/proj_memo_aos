@@ -5,7 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.RadioButton
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
@@ -104,19 +108,7 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val layoutResId: Int, 
 
     // 모든 View의 background color를 설정하는 함수
     private fun setBackgroundColors(backgroundColor: BackgroundColorDataModel) {
-        // tag가 background 및 contents로 선언되어있는 View들의 backgournd 색을 설정된 background color에 맞게 변경
-        val allViews = Utils.getAllChildViews(binding.root, true)
-        allViews.forEach { view ->
-            when (view.tag) {
-                "background" -> { view.background.setTint(backgroundColor.backColor) }
-                "contents" -> { view.background.setTint(backgroundColor.contentsColor) }
-                "button" -> {
-                    if(view is ImageButton) {
-                        ImageViewCompat.setImageTintList(view, ColorStateList.valueOf(backgroundColor.buttonColor))
-                    }
-                }
-            }
-        }
+        backgroundColor.setTagColor(binding.root)
     }
 
     // Background 변경 시 동작하는 함수

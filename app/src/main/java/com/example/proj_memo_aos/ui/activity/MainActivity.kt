@@ -73,13 +73,13 @@ class MainActivity: BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         // nav fragment의 현재 상태에 따라 drawer를 활성화 또는 비활성화 시킴
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.memoEditor, R.id.setting -> {
-                    // fragment가 memo editor 및 setting 일때 Drawer 잠금
-                    setDrawerLock()
+                R.id.memoMain, R.id.map -> {
+                    // fragment가 memoMain 및 map 일때 Drawer 잠금 해제
+                    setDrawerUnlock()
                 }
                 else -> {
-                    // fragment가 memo editor 및 setting가 아닐때 잠금 해제
-                    setDrawerUnlock()
+                    // 이외의 경우 Drawer 잠금
+                    setDrawerLock()
                 }
             }
 

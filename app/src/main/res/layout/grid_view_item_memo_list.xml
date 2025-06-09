@@ -48,7 +48,8 @@
                     android:background="@null"
                     android:button="@drawable/custom_checkbox"
                     android:focusable="false"
-                    android:clickable="false"/>
+                    android:clickable="false"
+                    android:tag="checkBox"/>
 
                 <TextView
                     android:id="@+id/contentTextView"
@@ -57,7 +58,9 @@
                     android:gravity="top"
                     android:textSize="12sp"
                     android:layout_margin="5dp"
-                    android:text="@{itemChapter.content}"/>
+                    android:text="@{itemChapter.content}"
+                    android:maxLines="13"
+                    android:ellipsize="end"/>
 
             </LinearLayout>
 

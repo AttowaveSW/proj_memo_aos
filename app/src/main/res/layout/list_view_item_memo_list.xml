@@ -61,7 +61,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                         android:background="@null"
                         android:button="@drawable/custom_checkbox"
                         android:focusable="false"
-                        android:clickable="false"/>
+                        android:clickable="false"
+                        android:tag="checkBox"/>
 
                     <TextView
                         android:id="@+id/titleTextView"
@@ -101,7 +102,9 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:autoSizeMaxTextSize="10sp"
-                android:text="@{itemChapter.content}"/>
+                android:text="@{itemChapter.content}"
+                android:maxLines="3"
+                android:ellipsize="end"/>
 
         </LinearLayout>
 
