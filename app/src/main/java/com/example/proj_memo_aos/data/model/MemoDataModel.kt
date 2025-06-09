@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 //Activity, Fragment 간 전달되는 데이터 타입을 안전하게 확장하기 위해 Parcelize 라이브러리 사용 (객체를 전달하기 위해 사용)
-// for testa asdf 
+// for testa asdf  asdfasdfasdfa
 @Parcelize
 data class MemoDataModel (
     var title: String = "",
